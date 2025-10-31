@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scriptai/services/speech_to_text_service.dart';
+import 'package:scriptai/services/summary_service.dart';
 import 'login_screen.dart';
+
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -58,7 +61,24 @@ class WelcomeScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40.0),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                          print("Starting transcription test..."); //
+                          var result = await transcribeLocalAudioWithDio();
+
+                          if (result != null) {
+                            print('✅ النص الناتج: $result');
+                          } else {
+                            print('❌ فشل في التحويل.');
+                          }
+
+                          print("Starting summarization test..."); //
+                          final summary = await summarizeText(result!);
+
+                          if (summary != null) {
+                            print('Summary: $summary');
+                          } else {
+                            print('❌ Failed to summarize text.');
+                          }
                         Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                       },
                       style: ElevatedButton.styleFrom(
