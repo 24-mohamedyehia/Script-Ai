@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'profile_screen.dart'; 
+import 'profile_screen.dart';
+import 'recording_screen.dart'; // Import recording screen
 
 class Collection {
   String title;
@@ -194,11 +195,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      // Audio recording button (main FAB)
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            _showAddCollectionDialog, 
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.add, color: Color(0xFF1A237E), size: 30),
+        onPressed: () {
+          // Open recording screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const RecordingScreen()),
+          );
+        },
+        backgroundColor: Colors.red,
+        child: const Icon(Icons.mic, color: Colors.white, size: 30),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -213,6 +220,10 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(
                   icon: const Icon(Icons.home, color: Color(0xFF1A237E)),
                   onPressed: () {}),
+              // Add new collection button
+              IconButton(
+                  icon: const Icon(Icons.add, color: Colors.grey),
+                  onPressed: _showAddCollectionDialog),
               IconButton(
                   icon: const Icon(Icons.person_outline, color: Colors.grey),
                   onPressed: () {

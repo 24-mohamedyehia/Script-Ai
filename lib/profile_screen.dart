@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'settings_screen.dart'; // Import settings screen
+import 'about_screen.dart'; // Import About screen
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -162,46 +164,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  ProfileMenuItem(icon: Icons.settings, title: 'Setting'),
+                  // Settings button with Navigation
+                  ProfileMenuItem(
+                    icon: Icons.settings, 
+                    title: 'Setting',
+                    onTap: () {
+                      // Open settings screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                      );
+                    },
+                  ),
                   const SizedBox(height: 15),
-                  ProfileMenuItem(icon: Icons.info_outline, title: 'About'),
+                  // About button with Navigation
+                  ProfileMenuItem(
+                    icon: Icons.info_outline, 
+                    title: 'About',
+                    onTap: () {
+                      // Open About screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const AboutScreen()),
+                      );
+                    },
+                  ),
                   const Spacer(), 
                 ],
               ),
             ),
           ),
         ],
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: const Color(0xFF1A237E)),
+            const SizedBox(width: 15),
+            Expanded(
+                child: Text(title,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500))),
+            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+          ],
+        ),
       ),
     );
   }
 }
-
-class ProfileMenuItem extends StatelessWidget {
-  final IconData icon;
-  final String title;
-
-  const ProfileMenuItem({super.key, required this.icon, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: const Color(0xFF1A237E)),
-          const SizedBox(width: 15),
-          Expanded(
-              child: Text(title,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500))),
-          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-        ],
-      ),
-    );
-  }
-}
-
