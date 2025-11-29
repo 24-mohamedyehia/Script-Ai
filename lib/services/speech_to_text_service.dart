@@ -11,11 +11,9 @@ Future<String?> transcribeLocalAudioWithDio() async {
   final dio = Dio();
 
   try {
-    //
     final audioBytes = await rootBundle.load('assets/audio/Recording.m4a');
     final audioData = audioBytes.buffer.asUint8List();
 
-    //
     final formData = FormData.fromMap({
       'model': model,
       'file': MultipartFile.fromBytes(
@@ -25,7 +23,6 @@ Future<String?> transcribeLocalAudioWithDio() async {
       ),
     });
 
-    //
     final response = await dio.post(
       url,
       data: formData,
@@ -36,7 +33,6 @@ Future<String?> transcribeLocalAudioWithDio() async {
       ),
     );
 
-    //
     if (response.statusCode == 200) {
       return response.data['text'];
     } else {
