@@ -33,6 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _phoneController.dispose();
     super.dispose();
   }
+  
   void _showEditProfileDialog() {
     _nameController.text = _name;
     _emailController.text = _email;
@@ -195,6 +196,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// Profile menu item widget (with tap functionality)
+class ProfileMenuItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap; // Function to execute on tap
+
+  const ProfileMenuItem({
+    super.key, 
+    required this.icon, 
+    required this.title,
+    required this.onTap, // Add onTap as required parameter
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap, // Execute function on tap
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
