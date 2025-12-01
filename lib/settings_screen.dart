@@ -110,7 +110,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 
                 const SizedBox(width: 30),
                 
-                // Delete account text
                 Row(
                   children: [
                     Text(
@@ -136,7 +135,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
   
-  // Function to build language option
   Widget _buildLanguageOption({
     required String selectedLanguage,
     required String label,
@@ -147,7 +145,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       onTap: onTap,
       child: Row(
         children: [
-          // Selected language
           Text(
             selectedLanguage,
             style: const TextStyle(
@@ -160,16 +157,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           
           const SizedBox(width: 10),
           
-          // Small icon
           Icon(
             Icons.settings,
             color: Colors.white.withOpacity(0.5),
             size: 20,
           ),
           
-          const Spacer(), // Fill the space
+          const Spacer(),
           
-          // Text on the right
           Row(
             children: [
               Text(
@@ -192,7 +187,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
   
-  // Function to show language selection dialog
   void showLanguageDialog(String type) {
     showDialog(
       context: context,
@@ -235,7 +229,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
   
-  // Function to show delete confirmation dialog
   void showDeleteDialog() {
     showDialog(
       context: context,
@@ -246,15 +239,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close dialog
+                Navigator.pop(context);
               },
               child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                // Can add account deletion code here
                 Navigator.pop(context);
-                // Show success message
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Account deleted successfully'),

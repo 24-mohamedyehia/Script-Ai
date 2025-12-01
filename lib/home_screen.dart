@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'profile_screen.dart';
-import 'recording_screen.dart'; // Import recording screen
+import 'recording_screen.dart';
 
 class Collection {
   String title;
@@ -195,10 +195,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      // Audio recording button (main FAB)
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Open recording screen
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const RecordingScreen()),
@@ -220,7 +218,6 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(
                   icon: const Icon(Icons.home, color: Color(0xFF1A237E)),
                   onPressed: () {}),
-              // Add new collection button
               IconButton(
                   icon: const Icon(Icons.add, color: Colors.grey),
                   onPressed: _showAddCollectionDialog),
@@ -244,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
 class CollectionCard extends StatelessWidget {
   final String title;
   final int messageCount;
-  final VoidCallback onRename; 
+  final VoidCallback onRename;
   final VoidCallback onDelete; 
 
   const CollectionCard({
@@ -278,7 +275,7 @@ class CollectionCard extends StatelessWidget {
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
             const PopupMenuItem<String>(
               value: 'rename',
-              child: Text('Rename'), 
+              child: Text('Rename'),
             ),
             const PopupMenuItem<String>(
               value: 'delete',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'settings_screen.dart'; // Import settings screen
-import 'about_screen.dart'; // Import About screen
+import 'settings_screen.dart';
+import 'about_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -165,12 +165,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  // Settings button with Navigation
                   ProfileMenuItem(
                     icon: Icons.settings, 
                     title: 'Setting',
                     onTap: () {
-                      // Open settings screen
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const SettingsScreen()),
@@ -178,12 +176,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                   const SizedBox(height: 15),
-                  // About button with Navigation
                   ProfileMenuItem(
                     icon: Icons.info_outline, 
                     title: 'About',
                     onTap: () {
-                      // Open About screen
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const AboutScreen()),
@@ -201,23 +197,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-// Profile menu item widget (with tap functionality)
 class ProfileMenuItem extends StatelessWidget {
   final IconData icon;
   final String title;
-  final VoidCallback onTap; // Function to execute on tap
+  final VoidCallback onTap; 
 
   const ProfileMenuItem({
-    super.key, 
-    required this.icon, 
+    super.key,
+    required this.icon,
     required this.title,
-    required this.onTap, // Add onTap as required parameter
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap, // Execute function on tap
+      onTap: onTap, 
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
