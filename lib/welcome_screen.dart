@@ -62,7 +62,7 @@ class WelcomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 40.0),
                     child: ElevatedButton(
                       onPressed: () async {
-                          print("Starting transcription test..."); //
+                          print("Starting transcription test...");
                           var result = await transcribeLocalAudioWithDio();
 
                           if (result != null) {
@@ -71,7 +71,7 @@ class WelcomeScreen extends StatelessWidget {
                             print('❌ فشل في التحويل.');
                           }
 
-                          print("Starting summarization test..."); //
+                          print("Starting summarization test...");
                           final summary = await summarizeText(result!);
 
                           if (summary != null) {

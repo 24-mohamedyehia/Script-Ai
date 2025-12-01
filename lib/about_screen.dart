@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 
-// About Screen - App information
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Dark blue background
       backgroundColor: const Color(0xFF1A237E),
       
-      // App Bar at the top
       appBar: AppBar(
         backgroundColor: const Color(0xFF1A237E),
-        elevation: 0, // No shadow
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); // Go back to previous screen
+            Navigator.pop(context);
           },
         ),
         title: const Text(
@@ -28,29 +25,26 @@ class AboutScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        centerTitle: true, // Center the title
+        centerTitle: true,
       ),
       
-      // Page content
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // About title
             const Text(
               'About',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,
-                fontStyle: FontStyle.italic, // Italic font
+                fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
               ),
             ),
             
-            const SizedBox(height: 40), // Spacing
+            const SizedBox(height: 40),
             
-            // App version (text)
             const Text(
               'App version',
               style: TextStyle(
@@ -62,7 +56,6 @@ class AboutScreen extends StatelessWidget {
             
             const SizedBox(height: 20),
             
-            // Version number
             const Text(
               '0.1',
               style: TextStyle(
@@ -74,7 +67,6 @@ class AboutScreen extends StatelessWidget {
             
             const SizedBox(height: 40),
             
-            // Decorative lines (as in the design)
             _buildLine(),
             const SizedBox(height: 30),
             _buildLine(),
@@ -90,7 +82,6 @@ class AboutScreen extends StatelessWidget {
     );
   }
   
-  // Function to draw a horizontal line
   Widget _buildLine() {
     return Container(
       height: 1,
