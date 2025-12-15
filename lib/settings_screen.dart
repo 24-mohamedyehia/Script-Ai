@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'app_strings.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -9,257 +9,112 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
-  String appLanguage = 'English';
-  String meetingLanguage = 'Arabic';
   
+  void _changeAppLanguage() {
+    showModalBottomSheet(context: context, builder: (context) {
+      return Container(
+        height: 150,
+        color: Colors.white,
+        child: Column(
+          children: [
+             ListTile(
+               title: const Text("English"),
+               onTap: () async {
+                 await AppStrings.setLanguage('en');
+                 if(mounted) Navigator.pop(context);
+               },
+             ),
+             ListTile(
+               title: const Text("العربية"),
+               onTap: () async {
+                 await AppStrings.setLanguage('ar');
+                 if(mounted) Navigator.pop(context);
+               },
+             ),
+          ],
+        ),
+      );
+    });
+  }
+
+  void _changeRecordLanguage() {
+    showModalBottomSheet(context: context, builder: (context) {
+      return Container(
+        height: 150, 
+        color: Colors.white,
+        child: Column(
+          children: [
+             ListTile(title: const Text("English (US)"), onTap: () { AppStrings.setRecordLanguage('en-US'); setState((){}); Navigator.pop(context); }),
+             ListTile(title: const Text("العربية (Egypt)"), onTap: () { AppStrings.setRecordLanguage('ar-EG'); setState((){}); Navigator.pop(context); }),
+          ],
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      backgroundColor: const Color(0xFF1A237E),
-      
- 
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A237E),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Text(
-          'ScriptAI',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+    return ValueListenableBuilder<String>(
+      valueListenable: AppStrings.languageNotifier,
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: const Color(0xFF1A237E),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            title: Text(AppStrings.get('settings'), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            centerTitle: true,
           ),
-        ),
-        centerTitle: true,
-      ),
-      
-
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-      
-            const Text(
-              'Settings',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
+          body: Column(
+            children: [
+              const SizedBox(height: 20),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                  ),
+                  child: Column(
+                    children: [
+                      _buildSettingItem(AppStrings.get('appLang'), AppStrings.languageCode == 'ar' ? 'العربية' : 'English', false, _changeAppLanguage),
+                      _buildSettingItem(AppStrings.get('recordLang'), AppStrings.recordLanguageCode, false, _changeRecordLanguage),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            
-            const SizedBox(height: 50),
-            
-     
-            _buildLanguageOption(
-              selectedLanguage: appLanguage,
-              label: 'App language',
-              icon: Icons.language,
-              onTap: () {
-                showLanguageDialog('App Language');
-              },
-            ),
-            
-            const SizedBox(height: 30),
-            
-            _buildLanguageOption(
-              selectedLanguage: meetingLanguage,
-              label: 'Meeting Language',
-              icon: Icons.language,
-              onTap: () {
-                showLanguageDialog('Meeting Language');
-              },
-            ),
-            
-            const SizedBox(height: 50),
-            
+            ],
+          ),
+        );
+      }
+    );
+  }
+
+  Widget _buildSettingItem(String title, String value, bool isDestructive, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87)),
             Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                  
-                    showDeleteDialog();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 12,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Delete',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                
-                const SizedBox(width: 30),
-                
-                Row(
-                  children: [
-                    Text(
-                      'Delete account',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Icon(
-                      Icons.delete_outline,
-                      color: Colors.white.withOpacity(0.7),
-                      size: 20,
-                    ),
-                  ],
-                ),
+                Text(value, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                const SizedBox(width: 10),
+                const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
               ],
             ),
           ],
         ),
       ),
-    );
-  }
-  
-  Widget _buildLanguageOption({
-    required String selectedLanguage,
-    required String label,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        children: [
-          Text(
-            selectedLanguage,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-          
-          const SizedBox(width: 10),
-          
-          Icon(
-            Icons.settings,
-            color: Colors.white.withOpacity(0.5),
-            size: 20,
-          ),
-          
-          const Spacer(),
-          
-          Row(
-            children: [
-              Text(
-                label,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.7),
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Icon(
-                icon,
-                color: Colors.white.withOpacity(0.7),
-                size: 20,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-  
-  void showLanguageDialog(String type) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Choose $type'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: const Text('English'),
-                onTap: () {
-                  setState(() {
-                    if (type == 'App Language') {
-                      appLanguage = 'English';
-                    } else {
-                      meetingLanguage = 'English';
-                    }
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: const Text('Arabic'),
-                onTap: () {
-                  setState(() {
-                    if (type == 'App Language') {
-                      appLanguage = 'Arabic';
-                    } else {
-                      meetingLanguage = 'Arabic';
-                    }
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-  
-  void showDeleteDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Delete Account'),
-          content: const Text('Are you sure you want to delete your account? This action cannot be undone.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Account deleted successfully'),
-                  ),
-                );
-              },
-              child: const Text(
-                'Delete',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }
